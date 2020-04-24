@@ -3,11 +3,19 @@ const path = require("path");
 
 const container = dependable.container();
 
-const testDep = [["_", "lodash"]];
-testDep.forEach(function (val) {
+const Dependecies = [["_", "lodash"]];
+
+Dependecies.forEach(function (val) {
   container.register(val[0], function () {
     return require(val[1]);
   });
 });
 
-const _ = require("lodash");
+container.load(path.join(__dirname, "/controllers"));
+container.load(path.join(__dirname, "/helpers"));
+
+container.register("container", function () {
+  return container;
+});
+
+module.exports = container;
